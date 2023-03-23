@@ -4,6 +4,8 @@ import { fetchImage } from './Api/api';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 
+import { Container } from './App.styled';
+
 export class App extends Component {
   state = {
     images: null,
@@ -27,7 +29,7 @@ export class App extends Component {
 
     return (
       <>
-        <div>
+        <Container>
           <Searchbar onSubmit={this.acceptSearch} />
 
           {images && (
@@ -35,7 +37,7 @@ export class App extends Component {
               <ImageGallery images={images} />
             </div>
           )}
-        </div>
+        </Container>
       </>
     );
   }

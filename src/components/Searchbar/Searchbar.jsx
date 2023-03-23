@@ -1,4 +1,12 @@
-import { Formik, Form, Field } from 'formik';
+import { Formik } from 'formik';
+
+import {
+  ConteinerBar,
+  Button,
+  LabelBtn,
+  Input,
+  FormsSt,
+} from './Searchbar.styled';
 
 export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = ({ text }, actions) => {
@@ -11,25 +19,24 @@ export const Searchbar = ({ onSubmit }) => {
   };
 
   return (
-    <header className="searchbar">
+    <ConteinerBar>
       <Formik initialValues={{ text: '' }} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
-          <Form className="form">
-            <button type="submit" className="button" disabled={isSubmitting}>
-              <span className="button-label">Search</span>
-            </button>
+          <FormsSt className="form">
+            <Button type="submit" disabled={isSubmitting}>
+              <LabelBtn>Search</LabelBtn>
+            </Button>
 
-            <Field
+            <Input
               name="text"
-              className="input"
               type="text"
               autoComplete="off"
               autoFocus
               placeholder="Search images and photos"
             />
-          </Form>
+          </FormsSt>
         )}
       </Formik>
-    </header>
+    </ConteinerBar>
   );
 };

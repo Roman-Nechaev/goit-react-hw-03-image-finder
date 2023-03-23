@@ -1,9 +1,11 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 
+import { Gallery } from './ImageGallery.styled';
+
 export const ImageGallery = ({ images }) => {
   return (
-    <ul className="gallery">
+    <Gallery className="gallery">
       <ImageGalleryItem images={images} />
-    </ul>
+    </Gallery>
   );
 };
