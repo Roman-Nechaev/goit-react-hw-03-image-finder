@@ -11,7 +11,27 @@ export class App extends Component {
   state = {
     images: null,
     error: null,
-    pageNum: 5,
+    pageNum: 1,
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.pageNum !== this.state.pageNum) {
+      console.log('Увеличилось число ');
+
+      this.acceptSearch();
+    }
+  }
+
+  acceptSearch = async search => {
+    try {
+      const { pageNum } = this.state;
+
+      const images = await fetchImage(search, pageNum);
+
+      this.setState({ images: images.hits });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   clickResponse = () => {
@@ -20,18 +40,6 @@ export class App extends Component {
       return { pageNum: prevState.pageNum + 1 };
     });
   };
-
-  acceptSearch = async search => {
-    try {
-      const { pageNum } = this.state;
-      const images = await fetchImage(search, pageNum);
-      console.log(images.hits);
-      this.setState({ images: images.hits });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   render() {
     const { images } = this.state;
 
