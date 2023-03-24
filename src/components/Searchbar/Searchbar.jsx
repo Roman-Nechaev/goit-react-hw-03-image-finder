@@ -22,7 +22,7 @@ export const Searchbar = ({ onSubmit }) => {
     <ConteinerBar>
       <Formik initialValues={{ text: '' }} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
-          <FormsSt className="form">
+          <FormsSt>
             <Button type="submit" disabled={isSubmitting}>
               <LabelBtn>Search</LabelBtn>
             </Button>

@@ -4,7 +4,7 @@ import { Gallery } from './ImageGallery.styled';
 
 export const ImageGallery = ({ images }) => {
   return (
-    <Gallery className="gallery">
+    <Gallery>
       <ImageGalleryItem images={images} />
     </Gallery>
   );
