@@ -20,7 +20,6 @@ export class App extends Component {
       this.setState({ search: search });
       this.setState({ pageNum: 2 });
       const images = await fetchImage(search);
-
       this.setState({ images: images.hits });
     } catch (error) {
       console.log(error);
