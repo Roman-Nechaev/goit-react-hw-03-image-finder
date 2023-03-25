@@ -8,6 +8,8 @@ import { LoadMoreBtn } from './Button/Button';
 import { Container } from './App.styled';
 import Loader from './Loader/Loader';
 
+import { Modal } from './Modal/Modal';
+
 export class App extends Component {
   state = {
     images: null,
@@ -15,6 +17,8 @@ export class App extends Component {
     pageNum: 2,
     search: '',
     isLoading: false,
+    showModal: false,
+    modalImg: null,
   };
 
   acceptSearch = async search => {
@@ -48,8 +52,16 @@ export class App extends Component {
     }
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
+
+  givePicture = img => {
+    this.setState({ modalImg: img });
+  };
+
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, showModal, modalImg } = this.state;
 
     return (
       <>
@@ -57,9 +69,15 @@ export class App extends Component {
           <Searchbar onSubmit={this.acceptSearch} />
           {isLoading && <Loader />}
 
+          {showModal && <Modal onClose={this.toggleModal} giveImg={modalImg} />}
+
           {images && (
             <>
-              <ImageGallery images={images} />
+              <ImageGallery
+                images={images}
+                onClick={this.toggleModal}
+                giveImg={this.givePicture}
+              />
             </>
           )}
           {images && images.length > 0 && (
