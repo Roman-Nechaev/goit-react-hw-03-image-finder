@@ -6,6 +6,7 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { LoadMoreBtn } from './Button/Button';
 
 import { Container } from './App.styled';
+import Loader from './Loader/Loader';
 
 export class App extends Component {
   state = {
@@ -13,16 +14,21 @@ export class App extends Component {
     error: null,
     pageNum: 2,
     search: '',
+    isLoading: false,
   };
 
   acceptSearch = async search => {
     try {
+      this.setState({ images: null });
+      this.setState({ isLoading: true });
       this.setState({ search: search });
       this.setState({ pageNum: 2 });
       const images = await fetchImage(search);
       this.setState({ images: images.hits });
     } catch (error) {
       console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
@@ -43,12 +49,13 @@ export class App extends Component {
   };
 
   render() {
-    const { images } = this.state;
+    const { images, isLoading } = this.state;
 
     return (
       <>
         <Container>
           <Searchbar onSubmit={this.acceptSearch} />
+          {isLoading && <Loader />}
 
           {images && (
             <>
