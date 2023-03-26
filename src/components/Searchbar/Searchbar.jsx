@@ -12,10 +12,11 @@ export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = ({ text }, actions) => {
     if (text.trim() === '') {
       alert('Введи чтото нормальное ');
+      return;
     }
+
     onSubmit(text);
     actions.setSubmitting(false);
-    // actions.resetForm();
   };
 
   return (

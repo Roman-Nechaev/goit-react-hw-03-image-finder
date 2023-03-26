@@ -10,7 +10,7 @@ export const ImageGalleryItem = ({ images, onClicks, giveImg }) => {
             alt={image.tags}
             onClick={() => {
               onClicks();
-              giveImg(image.largeImageURL);
+              giveImg(image);
             }}
           />
         </GalleryItem>

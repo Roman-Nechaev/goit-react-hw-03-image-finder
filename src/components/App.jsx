@@ -13,42 +13,62 @@ import { Modal } from './Modal/Modal';
 export class App extends Component {
   state = {
     images: null,
-    error: null,
     pageNum: 2,
     search: '',
     isLoading: false,
     showModal: false,
     modalImg: null,
+    btnVision: true,
+    error: null,
   };
 
   acceptSearch = async search => {
+    if (this.state.search === search) {
+      return;
+    }
+
     try {
       this.setState({ images: null });
       this.setState({ isLoading: true });
       this.setState({ search: search });
       this.setState({ pageNum: 2 });
-      const images = await fetchImage(search);
-      this.setState({ images: images.hits });
+
+      const response = await fetchImage(search);
+      this.setState({ images: response.hits });
+
+      if (response.total === 0) {
+        console.log('Ничего не нашли!!');
+      }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      this.setState({ error: 'чтото пошло не так ' });
     } finally {
       this.setState({ isLoading: false });
     }
   };
 
-  clickResponse = async () => {
+  onClickPageUp = async () => {
     try {
       const { pageNum, search } = this.state;
       this.setState(prevState => {
         return { pageNum: prevState.pageNum + 1 };
       });
-      const img = await fetchImage(search, pageNum);
-      const obg = img.hits;
+      const response = await fetchImage(search, pageNum);
+
+      const nextPictures = response.hits;
+      if (nextPictures.length < 2) {
+        console.log('Прячь кнопку и Вы достигли конца списка');
+        this.setState({ btnVision: false });
+        return;
+      }
       this.setState(prevState => ({
-        images: [...prevState.images, ...obg],
+        images: [...prevState.images, ...nextPictures],
       }));
     } catch (error) {
       console.log(error);
+      this.setState({ error: 'чтото пошло не так ' });
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
@@ -56,12 +76,13 @@ export class App extends Component {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
-  givePicture = img => {
+  isModalPicture = img => {
     this.setState({ modalImg: img });
   };
 
   render() {
-    const { images, isLoading, showModal, modalImg } = this.state;
+    const { images, isLoading, showModal, modalImg, error, btnVision } =
+      this.state;
 
     return (
       <>
@@ -69,22 +90,24 @@ export class App extends Component {
           <Searchbar onSubmit={this.acceptSearch} />
           {isLoading && <Loader />}
 
-          {showModal && <Modal onClose={this.toggleModal} giveImg={modalImg} />}
+          {error && <p>{error}</p>}
 
           {images && (
             <>
               <ImageGallery
                 images={images}
                 onClick={this.toggleModal}
-                giveImg={this.givePicture}
+                giveImg={this.isModalPicture}
               />
             </>
           )}
-          {images && images.length > 0 && (
+          {images && images.length > 0 && btnVision && (
             <>
-              <LoadMoreBtn onClick={this.clickResponse} />
+              <LoadMoreBtn onClick={this.onClickPageUp} />
             </>
           )}
+
+          {showModal && <Modal onClose={this.toggleModal} giveImg={modalImg} />}
         </Container>
       </>
     );

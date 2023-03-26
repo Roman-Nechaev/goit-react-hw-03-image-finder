@@ -3,11 +3,11 @@ import { Form, Field } from 'formik';
 
 export const ConteinerBar = styled.header`
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 20px;
   padding: 20px;
   width: 600px;
   border: 1px solid rgb(189, 189, 189);
-  background-color: #3f51b5;
+  background-color: #0b23a996;
   border-radius: 12px;
 `;
 
@@ -16,8 +16,8 @@ export const Button = styled.button`
   width: 36px;
   height: 36px;
   border: 0;
-  background-image: url('https://www.svgrepo.com/show/7574/round-left-button.svg');
-  background-size: 40%;
+  background-image: url('https://www.svgrepo.com/show/511119/search-magnifying-glass.svg');
+  background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0.6;
