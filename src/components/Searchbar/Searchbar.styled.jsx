@@ -5,10 +5,13 @@ export const ConteinerBar = styled.header`
   margin: 0 auto;
   margin-top: 20px;
   padding: 20px;
-  width: 600px;
+  width: 100%;
   border: 1px solid rgb(189, 189, 189);
   background-color: #0b23a996;
   border-radius: 12px;
+
+  position: fixed;
+  z-index: 100;
 `;
 
 export const Button = styled.button`
@@ -66,4 +69,5 @@ export const FormsSt = styled(Form)`
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
+  margin: 0 auto;
 `;

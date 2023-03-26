@@ -5,10 +5,10 @@ export const Loader = () => {
     <>
       <MagnifyingGlass
         visible={true}
-        height="150"
-        width="150"
+        height="180"
+        width="180"
         ariaLabel="MagnifyingGlass-loading"
-        wrapperStyle={{ margin: '0 auto' }}
+        wrapperStyle={{ margin: '0 auto', marginTop: '200px' }}
         wrapperClass="MagnifyingGlass-wrapper"
         glassColor="#c0efff"
         color="#5c5c5c"
@@ -16,5 +16,3 @@ export const Loader = () => {
     </>
   );
 };
-
-export default Loader;

@@ -6,7 +6,7 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { LoadMoreBtn } from './Button/Button';
 
 import { Container } from './App.styled';
-import Loader from './Loader/Loader';
+import { Loader } from './Loader/Loader';
 
 import { Modal } from './Modal/Modal';
 
@@ -20,6 +20,7 @@ export class App extends Component {
     modalImg: null,
     btnVision: true,
     error: null,
+    isLoadingSpinner: false,
   };
 
   acceptSearch = async search => {
@@ -49,6 +50,7 @@ export class App extends Component {
 
   onClickPageUp = async () => {
     try {
+      this.setState({ isLoadingSpinner: true });
       const { pageNum, search } = this.state;
       this.setState(prevState => {
         return { pageNum: prevState.pageNum + 1 };
@@ -65,10 +67,11 @@ export class App extends Component {
         images: [...prevState.images, ...nextPictures],
       }));
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       this.setState({ error: 'чтото пошло не так ' });
     } finally {
       this.setState({ isLoading: false });
+      this.setState({ isLoadingSpinner: false });
     }
   };
 
@@ -81,8 +84,15 @@ export class App extends Component {
   };
 
   render() {
-    const { images, isLoading, showModal, modalImg, error, btnVision } =
-      this.state;
+    const {
+      images,
+      isLoading,
+      showModal,
+      modalImg,
+      error,
+      btnVision,
+      isLoadingSpinner,
+    } = this.state;
 
     return (
       <>
@@ -103,7 +113,10 @@ export class App extends Component {
           )}
           {images && images.length > 0 && btnVision && (
             <>
-              <LoadMoreBtn onClick={this.onClickPageUp} />
+              <LoadMoreBtn
+                onClick={this.onClickPageUp}
+                isLoadingSpin={isLoadingSpinner}
+              />
             </>
           )}
 
