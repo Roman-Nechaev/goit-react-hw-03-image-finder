@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 
 import { fetchImage } from './Api/api';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { LoadMoreBtn } from './Button/Button';
-
-import { Container } from './App.styled';
 import { Loader } from './Loader/Loader';
 
 import { Modal } from './Modal/Modal';
+
+import { errorMassage } from './Error/errorMessage';
+import { ErrorData } from './Error/ErrorData/ErrorData';
+
+import { Container } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -33,16 +37,16 @@ export class App extends Component {
       this.setState({ isLoading: true });
       this.setState({ search: search });
       this.setState({ pageNum: 2 });
+      this.setState({ btnVision: true });
 
       const response = await fetchImage(search);
       this.setState({ images: response.hits });
 
       if (response.total === 0) {
-        console.log('Ничего не нашли!!');
+        this.setState({ error: errorMassage(search) });
       }
-    } catch (error) {
-      // console.log(error);
-      this.setState({ error: 'чтото пошло не так ' });
+    } catch {
+      this.setState({ error: ErrorData() });
     } finally {
       this.setState({ isLoading: false });
     }
@@ -58,17 +62,20 @@ export class App extends Component {
       const response = await fetchImage(search, pageNum);
 
       const nextPictures = response.hits;
-      if (nextPictures.length < 2) {
-        console.log('Прячь кнопку и Вы достигли конца списка');
+      if (nextPictures.length < 1) {
         this.setState({ btnVision: false });
+        Report.info(
+          "That's all",
+          "We're sorry, but you've reached the end of search results.",
+          'Okay'
+        );
         return;
       }
       this.setState(prevState => ({
         images: [...prevState.images, ...nextPictures],
       }));
-    } catch (error) {
-      // console.log(error);
-      this.setState({ error: 'чтото пошло не так ' });
+    } catch {
+      this.setState({ error: ErrorData() });
     } finally {
       this.setState({ isLoading: false });
       this.setState({ isLoadingSpinner: false });
@@ -100,7 +107,7 @@ export class App extends Component {
           <Searchbar onSubmit={this.acceptSearch} />
           {isLoading && <Loader />}
 
-          {error && <p>{error}</p>}
+          {error && error}
 
           {images && (
             <>

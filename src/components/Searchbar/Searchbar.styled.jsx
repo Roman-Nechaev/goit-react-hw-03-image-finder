@@ -27,6 +27,7 @@ export const Button = styled.button`
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   outline: none;
+  background-color: #fff;
 
   :hover {
     opacity: 1;
@@ -67,7 +68,8 @@ export const FormsSt = styled(Form)`
   width: 100%;
   max-width: 600px;
   background-color: #fff;
-  border-radius: 3px;
+  border-radius: 20px;
   overflow: hidden;
   margin: 0 auto;
+  padding-left: 5px;
 `;
