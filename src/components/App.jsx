@@ -28,7 +28,7 @@ export class App extends Component {
   };
 
   acceptSearch = async search => {
-    if (this.state.search === search) {
+    if (this.state.search === search || search === '') {
       return;
     }
 

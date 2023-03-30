@@ -1,5 +1,7 @@
 import { Formik } from 'formik';
 
+import { errorEmptyInput } from 'components/Error/emptyInput';
+
 import PropTypes from 'prop-types';
 
 import {
@@ -13,8 +15,7 @@ import {
 export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = ({ text }, actions) => {
     if (text.trim() === '') {
-      alert('Введи чтото нормальное ');
-      return;
+      errorEmptyInput();
     }
 
     onSubmit(text);
