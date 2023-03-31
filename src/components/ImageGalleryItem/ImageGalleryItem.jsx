@@ -1,20 +1,17 @@
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = ({ images, onClick, giveImg }) => {
+export const ImageGalleryItem = ({ images, onClick, onGiveImg }) => {
+  const { webformatURL, tags } = images;
   return (
-    <>
-      {images.map(image => (
-        <GalleryItem key={image.id}>
-          <GalleryItemImage
-            src={image.webformatURL}
-            alt={image.tags}
-            onClick={() => {
-              onClick();
-              giveImg(image);
-            }}
-          />
-        </GalleryItem>
-      ))}
-    </>
+    <GalleryItem>
+      <GalleryItemImage
+        src={webformatURL}
+        alt={tags}
+        onClick={() => {
+          onClick();
+          onGiveImg(images);
+        }}
+      />
+    </GalleryItem>
   );
 };

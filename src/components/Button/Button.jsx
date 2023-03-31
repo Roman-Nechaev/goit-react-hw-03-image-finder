@@ -1,15 +1,12 @@
+import PropTypes from 'prop-types';
+
 import { Button } from './Button.styled';
 import { ThreeDots } from 'react-loader-spinner';
 
-export const LoadMoreBtn = ({ onClick, isLoadingSpin }) => {
+export const LoadMoreBtn = ({ onLoadMore, isLoadingSpin }) => {
   return (
     <>
-      <Button
-        type="button"
-        onClick={() => {
-          onClick();
-        }}
-      >
+      <Button type="button" onClick={onLoadMore}>
         {!isLoadingSpin ? (
           'Load More'
         ) : (
@@ -26,4 +23,9 @@ export const LoadMoreBtn = ({ onClick, isLoadingSpin }) => {
       </Button>
     </>
   );
+};
+
+LoadMoreBtn.propTypes = {
+  onLoadMore: PropTypes.func.isRequired,
+  isLoadingSpin: PropTypes.bool.isRequired,
 };

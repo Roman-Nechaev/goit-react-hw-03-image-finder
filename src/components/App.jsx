@@ -86,7 +86,7 @@ export class App extends Component {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
 
-  isModalPicture = img => {
+  updateModalPicture = img => {
     this.setState({ modalImg: img });
   };
 
@@ -110,24 +110,24 @@ export class App extends Component {
           {error && error}
 
           {images && (
-            <>
-              <ImageGallery
-                images={images}
-                onClick={this.toggleModal}
-                giveImg={this.isModalPicture}
-              />
-            </>
+            <ImageGallery
+              images={images}
+              onClick={this.toggleModal}
+              onUpdateModalPicture={this.updateModalPicture}
+            />
           )}
           {images && images.length > 0 && btnVision && (
             <>
               <LoadMoreBtn
-                onClick={this.onClickPageUp}
+                onLoadMore={this.onClickPageUp}
                 isLoadingSpin={isLoadingSpinner}
               />
             </>
           )}
 
-          {showModal && <Modal onClose={this.toggleModal} giveImg={modalImg} />}
+          {showModal && (
+            <Modal onClose={this.toggleModal} onGiveImg={modalImg} />
+          )}
         </Container>
       </>
     );
